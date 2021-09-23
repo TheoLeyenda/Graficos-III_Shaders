@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: WaterShader_StandarSurfice
-  m_Shader: {fileID: 4800000, guid: c183e8d1b98aeca46a98f5db56de7f4d, type: 3}
+  m_Name: WavesWater
+  m_Shader: {fileID: 4800000, guid: 67812c6ebe8fbfc43a472b265f5a3cff, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -69,9 +69,11 @@ Material:
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
+    - _Speed: 8
     - _SrcBlend: 1
+    - _Strength: 0.489
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.754717, g: 0.010679938, b: 0.010679938, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
