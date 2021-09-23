@@ -111,8 +111,7 @@
 				colour = lerp(colour, vec3(1.0, 1.0, 0.0), (uv.x + uv.y) * first.x * first.y); // Yellow line
 
 				#endif
-				return vec4(colour, 1.0);
-			return _Color;
+				return vec4(colour, 1.0) * _Color;
 		}
 
 		ENDCG

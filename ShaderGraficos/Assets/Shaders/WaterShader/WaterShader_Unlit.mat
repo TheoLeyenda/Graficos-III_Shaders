@@ -69,9 +69,9 @@ Material:
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _Speed: 100
+    - _Speed: 200
     - _SrcBlend: 1
-    - _Strength: 1
+    - _Strength: 0.886
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
