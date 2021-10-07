@@ -7,12 +7,12 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SpotLight
-  m_Shader: {fileID: 4800000, guid: fbd906e7e50eac043988127ad7a62488, type: 3}
+  m_Name: AlwaysVisible
+  m_Shader: {fileID: 4800000, guid: 47b60fa8f0af15744b0ba3d5de2be623, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 1
+  m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
@@ -40,7 +40,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 40795f9f7cad51b44bdb1f59959c6f0b, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1a379661d07317045b8f212a21a55e84, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -57,7 +57,6 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
-    - _CircleRadius: 3
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
@@ -68,18 +67,11 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _RingSize: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _UseVertexEffectY: 0
-    - _UseVertexEffectY_1: 0
-    - _UseVertexEffectY_2: 0
-    - _UseVertexEffectY_3: 1
     - _ZWrite: 1
     m_Colors:
-    - _CharacterPosition: {r: -3.2206926, g: 1, b: -0.040525205, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorTint: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
