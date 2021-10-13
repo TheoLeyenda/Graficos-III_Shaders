@@ -9,6 +9,8 @@
 		_SurfaceNoiseCutoff("Surface Noise Cutoff", Range(0, 1)) = 0.777
 		_FoamDistance("Foam Distance", Float) = 0.4
 		_SurfaceNoiseScroll("Surface Noise Scroll Amount", Vector) = (0.03, 0.03, 0, 0)
+		_SurfaceDistortion("Surface Distortion", 2D) = "white" {}
+		_SurfaceDistortionAmount("Surface Distortion Amount", Range(0, 1)) = 0.27
     }
     SubShader
     {
@@ -29,6 +31,7 @@
             struct v2f
             {
 				float2 noiseUV : TEXCOORD0;
+				float2 distortUV : TEXCOORD1;
                 float4 vertex : SV_POSITION;
 				float4 screenPosition : TEXCOORD2;
             };
@@ -42,6 +45,10 @@
 			float _SurfaceNoiseCutoff;
 			float _FoamDistance;
 			float2 _SurfaceNoiseScroll;
+			sampler2D _SurfaceDistortion;
+			float4 _SurfaceDistortion_ST;
+
+			float _SurfaceDistortionAmount;
 
             v2f vert (appdata v)
             {
@@ -50,7 +57,7 @@
                 o.vertex = UnityObjectToClipPos(v.vertex);
 				o.screenPosition = ComputeScreenPos(o.vertex);
 				o.noiseUV = TRANSFORM_TEX(v.uv, _SurfaceNoise);
-
+				o.distortUV = TRANSFORM_TEX(v.uv, _SurfaceDistortion);
                 return o;
             }
 
@@ -61,7 +68,9 @@
 				float depthDifference = existingDepthLinear - i.screenPosition.w;
 				float waterDepthDifference01 = saturate(depthDifference / _DepthMaxDistance);
 				float4 waterColor = lerp(_DepthGradientShallow, _DepthGradientDeep, waterDepthDifference01);
-				float2 noiseUV = float2(i.noiseUV.x + _Time.y * _SurfaceNoiseScroll.x, i.noiseUV.y + _Time.y * _SurfaceNoiseScroll.y);
+				float2 distortSample = (tex2D(_SurfaceDistortion, i.distortUV).xy * 2 - 1) * _SurfaceDistortionAmount;
+				float2 noiseUV = float2((i.noiseUV.x + _Time.y * _SurfaceNoiseScroll.x) + distortSample.x, (i.noiseUV.y + _Time.y * _SurfaceNoiseScroll.y) + distortSample.y);
+				//float2 noiseUV = float2(i.noiseUV.x + _Time.y * _SurfaceNoiseScroll.x, i.noiseUV.y + _Time.y * _SurfaceNoiseScroll.y); // LO CAMBIAMOS POR LA LINEA DE ARRIBA
 				float surfaceNoiseSample = tex2D(_SurfaceNoise, noiseUV).r;
 				//float surfaceNoiseSample = tex2D(_SurfaceNoise, i.noiseUV).r; // LO CAMBIAMOS POR LA LINEA DE ARRIBA
 				float foamDepthDifference01 = saturate(depthDifference / _FoamDistance);
