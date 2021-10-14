@@ -27,7 +27,7 @@
 			ZWrite Off
 
 			CGPROGRAM
-			
+			#define SMOOTHSTEP_AA 0.01
 			#pragma vertex vert
             #pragma fragment frag
 
@@ -104,7 +104,8 @@
 				float foamDepthDifference01 = saturate(depthDifference / foamDistance);
 				//float foamDepthDifference01 = saturate(depthDifference / _FoamDistance); REMPLAZAMOS ESTO POR LA LINEA DE ARRIBA
 				float surfaceNoiseCutoff = foamDepthDifference01 * _SurfaceNoiseCutoff;
-				float surfaceNoise = surfaceNoiseSample > surfaceNoiseCutoff ? 1 : 0;
+				//float surfaceNoise = surfaceNoiseSample > surfaceNoiseCutoff ? 1 : 0; //REMPLAZAMOS ESTO POR LA LINEA DE ABAJO
+				float surfaceNoise = smoothstep(surfaceNoiseCutoff - SMOOTHSTEP_AA, surfaceNoiseCutoff + SMOOTHSTEP_AA, surfaceNoiseSample);
 
 				float4 surfaceNoiseColor = _FoamColor;
 				surfaceNoiseColor.a *= surfaceNoise;
