@@ -47,19 +47,18 @@
 
             struct appdata
             {
-				float3 normal : NORMAL; // Datos para calcular las normales de la espuma.
-				float4 uv : TEXCOORD0; // Dato para calcular el pixel actual de las texturas.
+				float3 normal : NORMAL;
+				float4 uv : TEXCOORD0;
                 float4 vertex : POSITION;
             };
 
             struct v2f
             {
-				float3 viewNormal : NORMAL;  // Datos para calcular las normales de la espuma.
-				float2 noiseUV : TEXCOORD0; // Dato para calcular el pixel actual de la textura de ruido que utilizaremos para simular la espuma en el agua.
-				float2 distortUV : TEXCOORD1; //Dato para calcular el pixel actual de la textura de distorcion.
+				float3 viewNormal : NORMAL;
+				float2 noiseUV : TEXCOORD0;
+				float2 distortUV : TEXCOORD1;
                 float4 vertex : SV_POSITION;
-				float4 screenPosition : TEXCOORD2; //Dato para calcular la posicion del pixel actual que se esta renderizando asi poder poner el pixel
-												   //de profundidad por encima.
+				float4 screenPosition : TEXCOORD2;
             };
 
 			//Propiedades declaradas dentro del shader para poder ser usadas.
