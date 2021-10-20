@@ -2,8 +2,8 @@
 {
     Properties
     {	
-		_DepthGradientShallow("Depth Gradient Shallow", Color) = (0.325, 0.807, 0.971, 0.725) // Color del agua mas cerca de su superficie.
-		_DepthGradientDeep("Depth Gradient Deep", Color) = (0.086, 0.407, 1, 0.749) // Color del agua con profundidad.
+		_DepthGradientShallow("Depth Gradient Shallow", Color) = (0.325, 0.807, 0.971, 0.725) // Color del agua de la orilla.
+		_DepthGradientDeep("Depth Gradient Deep", Color) = (0.086, 0.407, 1, 0.749) // Color del agua profunda.
 		_DepthMaxDistance("Depth Maximum Distance", Float) = 1 // Variable que controla el maximo de gradiente de la profundidad del agua.
 
 		_SurfaceNoise("Surface Noise", 2D) = "white" {} // Textura de ruido para simular el flujo del agua en la superficie.
@@ -37,6 +37,7 @@
 
             #include "UnityCG.cginc"
 
+			
 			float4 alphaBlend(float4 top, float4 bottom)
 			{
 				float3 color = (top.rgb * top.a) + (bottom.rgb * (1 - top.a));
@@ -65,7 +66,7 @@
 			float4 _DepthGradientShallow;
 			float4 _DepthGradientDeep;
 			float _DepthMaxDistance;
-			sampler2D _CameraDepthTexture; //Variable para acceder a la textura de profundidad de la camara.
+			sampler2D _CameraDepthTexture;
 			sampler2D _SurfaceNoise;
 			float4 _SurfaceNoise_ST;
 			float _SurfaceNoiseCutoff;
@@ -86,9 +87,9 @@
 
                 o.vertex = UnityObjectToClipPos(v.vertex);
 				o.screenPosition = ComputeScreenPos(o.vertex); //Computamos la posicion del pixel de profundidad.
-				o.noiseUV = TRANSFORM_TEX(v.uv, _SurfaceNoise); //Computamos el pixel de la textura de ruido.
-				o.distortUV = TRANSFORM_TEX(v.uv, _SurfaceDistortion); // Computamos el pixel de la textura de distorcion.
-				o.viewNormal = COMPUTE_VIEW_NORMAL; //Computamos la normal del pixel para hacer una espuma uniforme.
+				o.noiseUV = TRANSFORM_TEX(v.uv, _SurfaceNoise); //Computamos la textura de ruido.
+				o.distortUV = TRANSFORM_TEX(v.uv, _SurfaceDistortion); // Computamos la textura de distorcion.
+				o.viewNormal = COMPUTE_VIEW_NORMAL;
                 return o;
             }
 
@@ -97,14 +98,10 @@
 				//Proceso la profundidad del pixel en funcion a la posicion de la camara, si movemos la camara veremos como el gradiente de la profundidad del agua tambien se mueve.
 				float existingDepth01 = tex2Dproj(_CameraDepthTexture, UNITY_PROJ_COORD(i.screenPosition)).r;
 				float existingDepthLinear = LinearEyeDepth(existingDepth01); 
+				float depthDifference = existingDepthLinear - i.screenPosition.w;
 				//--------------------------------------------------------------------//
 
-				//Generamos una diferencia entre el pixel de profundidad generado por la textura de profundidad de la camara y la posicion en w del pixel actual 
-				//para poder determinar que tan profunda se deveria ver el agua en escala de grises.
-				float depthDifference = existingDepthLinear - i.screenPosition.w;
-				//-------------------------------------------------------------------//
-
-				//Generamos el color interpolado utilizando el depthDifference antes calculado y el color 
+				//Generamos el color interpolado utilizando el depthDifference antes calculado, el color 
 				//_DepthGradientShallow que representa el color del agua cerca de la superficie (orillas) y 
 				//el color _DepthGradientDeep que representa el color del agua en la parte donde su profundidad es alta.
 				float waterDepthDifference01 = saturate(depthDifference / _DepthMaxDistance);
@@ -129,13 +126,13 @@
 				float3 normalDot = saturate(dot(existingNormal, i.viewNormal));
 				//----------------------------------------------------------------------------------------------------//
 
-				// Generamos la espuma en la orilla utilizando el _FoamMaxDistance y el _FoamMinDistance
+				// Generamos la espuma en la orilla utilizando el _FoamMaxDistance, el _FoamMinDistanc y la normalDot
 				float foamDistance = lerp(_FoamMaxDistance, _FoamMinDistance, normalDot);
 				float foamDepthDifference01 = saturate(depthDifference / foamDistance);
 				float surfaceNoiseCutoff = foamDepthDifference01 * _SurfaceNoiseCutoff;
 				//------------------------------------------------------------------------------------//
 
-				//Recortamos la espuma que se genera en el agua utilizando el surfaceNoiseCutoff para que la generacion de espuma se vea aleatoria y natural.
+				//Utilizams el surfaceNoiseCutoff para determinar cuanto afectara la textura de _SurfaceDistortion a nuestra espuma.
 				float surfaceNoise = smoothstep(surfaceNoiseCutoff - SMOOTHSTEP_AA, surfaceNoiseCutoff + SMOOTHSTEP_AA, surfaceNoiseSample);
 				//----------------------------------------------------------------------------------------------------------------------------//
 
