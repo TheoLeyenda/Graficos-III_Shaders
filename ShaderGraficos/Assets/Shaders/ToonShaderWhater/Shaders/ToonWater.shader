@@ -1,7 +1,7 @@
 ﻿Shader "TestShader/Toon/Water"
 {
     Properties
-    {	
+	{
 		_DepthGradientShallow("Depth Gradient Shallow", Color) = (0.325, 0.807, 0.971, 0.725) // Color del agua de la orilla.
 		_DepthGradientDeep("Depth Gradient Deep", Color) = (0.086, 0.407, 1, 0.749) // Color del agua profunda.
 		_DepthMaxDistance("Depth Maximum Distance", Float) = 1 // Variable que controla el maximo de gradiente de la profundidad del agua.
@@ -17,8 +17,9 @@
 		_SurfaceDistortionAmount("Surface Distortion Amount", Range(0, 1)) = 0.27 // Valor que representa que tanto se distorcionara el movimiento de la espuma.
 		_FoamColor("Foam Color", Color) = (1,1,1,1) // Color de la espuma.
 
-		_Strength("Strength", Range(0,2)) = 1.0
 		_Speed("Speed", Range(-200, 200)) = 100
+		_WaveAmp("Wave Amp", Float) = 1
+		_NoiseTex("Nouse Tex Waves", 2D) = "white" {}
     }
     SubShader
     {
@@ -87,29 +88,34 @@
 			sampler2D _CameraNormalsTexture;
 			float4 _FoamColor;
 
-			
-
-			float _Strength;
 			float _Speed;
+			float _WaveSpeed;
+			float _WaveAmp;
+			sampler2D _NoiseTex;
 			//---------------------------------------------------------------//
 
             v2f vert (appdata v)
             {
                 v2f o;
+				
+				// Efecto de oleaje para oceano.
+
+				_WaveSpeed = _Speed;
 
                 o.vertex = UnityObjectToClipPos(v.vertex);
-
-				float4 worldPos = mul(unity_ObjectToWorld, v.vertex);
-
-				float displacement = (cos(worldPos.y) + cos(worldPos.x + (_Speed * _Time)));
-				worldPos.y = worldPos.y + (displacement * _Strength);
-
-				o.vertex = mul(UNITY_MATRIX_VP, worldPos);
-
-				o.screenPosition = ComputeScreenPos(o.vertex); //Computamos la posicion del pixel de profundidad.
+				
+				float NoiseSample = tex2Dlod(_NoiseTex, float4 (v.uv.xy, 0, 0));
+				
+				
+				o.vertex.y += sin(_Time * _WaveSpeed * NoiseSample) * _WaveAmp;
+				o.vertex.x += cos(_Time * _WaveSpeed * NoiseSample) * _WaveAmp;
+				//---------------------------------------//
+				
 				o.noiseUV = TRANSFORM_TEX(v.uv, _SurfaceNoise); //Computamos la textura de ruido.
+				o.screenPosition = ComputeScreenPos(o.vertex); //Computamos la posicion del pixel de profundidad.
 				o.distortUV = TRANSFORM_TEX(v.uv, _SurfaceDistortion); // Computamos la textura de distorcion.
 				o.viewNormal = COMPUTE_VIEW_NORMAL;
+
                 return o;
             }
 
