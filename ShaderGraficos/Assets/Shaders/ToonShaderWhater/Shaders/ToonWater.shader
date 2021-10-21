@@ -16,6 +16,9 @@
 		_SurfaceDistortion("Surface Distortion", 2D) = "white" {} //Textura de distorcion que utilizaremos para generar una sensacion aleatoria a la hora de mover la espuma del agua.
 		_SurfaceDistortionAmount("Surface Distortion Amount", Range(0, 1)) = 0.27 // Valor que representa que tanto se distorcionara el movimiento de la espuma.
 		_FoamColor("Foam Color", Color) = (1,1,1,1) // Color de la espuma.
+
+		_Strength("Strength", Range(0,2)) = 1.0
+		_Speed("Speed", Range(-200, 200)) = 100
     }
     SubShader
     {
@@ -36,7 +39,6 @@
             #pragma fragment frag
 
             #include "UnityCG.cginc"
-
 			
 			float4 alphaBlend(float4 top, float4 bottom)
 			{
@@ -45,6 +47,11 @@
 
 				return float4(color, alpha);
 			}			
+			
+			float random(float2 uv)
+			{
+				return frac(sin(dot(uv,float2(12.9898,78.233)))*43758.5453123);
+			}
 
             struct appdata
             {
@@ -79,13 +86,26 @@
 			float _SurfaceDistortionAmount;
 			sampler2D _CameraNormalsTexture;
 			float4 _FoamColor;
+
+			
+
+			float _Strength;
+			float _Speed;
 			//---------------------------------------------------------------//
 
             v2f vert (appdata v)
             {
                 v2f o;
 
-                o.vertex = UnityObjectToClipPos(v.vertex);
+                //o.vertex = UnityObjectToClipPos(v.vertex);
+
+				float4 worldPos = mul(unity_ObjectToWorld, v.vertex);
+
+				float displacement = (cos(worldPos.y) + cos(worldPos.x + (_Speed * _Time)));
+				worldPos.y = worldPos.y + (displacement * _Strength);
+
+				o.vertex = mul(UNITY_MATRIX_VP, worldPos);
+
 				o.screenPosition = ComputeScreenPos(o.vertex); //Computamos la posicion del pixel de profundidad.
 				o.noiseUV = TRANSFORM_TEX(v.uv, _SurfaceNoise); //Computamos la textura de ruido.
 				o.distortUV = TRANSFORM_TEX(v.uv, _SurfaceDistortion); // Computamos la textura de distorcion.

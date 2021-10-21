@@ -59,6 +59,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleNoiseWave:
+        m_Texture: {fileID: 2800000, guid: 47aa66ad2eec4a44d8849f1785ce84c9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SurfaceDistortion:
         m_Texture: {fileID: 2800000, guid: aa701e5be2dbcd24aad4fb9c3ca284da, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -66,6 +70,10 @@ Material:
     - _SurfaceNoise:
         m_Texture: {fileID: 2800000, guid: e182ac5d3b797044fb29f3fa2acc3708, type: 3}
         m_Scale: {x: 1, y: 4}
+        m_Offset: {x: 0, y: 0}
+    - _SurfaceWaves:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
@@ -83,14 +91,21 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _PorcentageWaves: 36.9
     - _ShorelineMaxDistance: 0.4
     - _ShorelineMinDistance: 0.04
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
+    - _Speed: 24
+    - _SpeedWave: -135
     - _SrcBlend: 1
+    - _Strength: 0.028
+    - _StrengthWave: 0.286
     - _SurfaceDistortionAmount: 0.7
     - _SurfaceNoiseCutoff: 0.7
     - _UVSec: 0
+    - _WaveValue: 0.189
+    - _YAmplitude: 1
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
