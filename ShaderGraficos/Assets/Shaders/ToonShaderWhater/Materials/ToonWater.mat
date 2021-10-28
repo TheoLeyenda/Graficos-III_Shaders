@@ -108,7 +108,7 @@ Material:
     - _SurfaceDistortionAmount: 0.7
     - _SurfaceNoiseCutoff: 0.7
     - _UVSec: 0
-    - _WaveAmp: 0.5
+    - _WaveAmp: 0
     - _WaveValue: 0.189
     - _YAmplitude: 1
     - _ZWrite: 1
