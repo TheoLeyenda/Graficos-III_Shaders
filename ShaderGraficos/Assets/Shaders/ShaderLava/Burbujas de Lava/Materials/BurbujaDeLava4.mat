@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Disolve
-  m_Shader: {fileID: 4800000, guid: 2418ad37f46abff4b96a5763170732fc, type: 3}
+  m_Name: BurbujaDeLava4
+  m_Shader: {fileID: 4800000, guid: 36df097cb62fcae4795afe395fb035c3, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 10305, guid: 0000000000000000f000000000000000, type: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -36,7 +36,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DisolveTexture:
-        m_Texture: {fileID: 2800000, guid: 40795f9f7cad51b44bdb1f59959c6f0b, type: 3}
+        m_Texture: {fileID: 2800000, guid: deb3048a3c726aa4dadec12fad1d209b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -44,7 +44,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 1a379661d07317045b8f212a21a55e84, type: 3}
+        m_Texture: {fileID: 2800000, guid: 0d55553696cb5884d9cb1b72be774524, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -60,11 +60,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Fresnel_Str: 1
+    - Scale_Simple_Noise: 15
+    - Step: 0
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _DisolveSize: 2
-    - _DisolveY: 7.43
+    - _DisolveSize: 5
+    - _DisolveY: 2.3
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
@@ -73,12 +76,16 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _RimPower: 3.33
+    - _RimWidth: 0.612
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _StartingY: 0.1
+    - _StartingY: -1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorTexture: {r: 1, g: 0.16862746, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _RimColor: {r: 1, g: 0.95686275, b: 0.8392157, a: 0}

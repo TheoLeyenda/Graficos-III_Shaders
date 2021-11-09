@@ -1,4 +1,4 @@
-﻿Shader "TestShader/Disolve"
+﻿Shader "TestShader/DisolveLava"
 {
     Properties
     {
