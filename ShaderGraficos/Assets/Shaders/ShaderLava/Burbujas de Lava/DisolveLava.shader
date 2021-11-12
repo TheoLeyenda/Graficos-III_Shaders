@@ -10,9 +10,9 @@
 		_ColorTexture("Color Texture", Color) = (0.086, 0.407, 1, 0.749)
 
 		_RampTex("Ramp Tex", 2D) = "white" {}
-		_FlowMap("Flow Map", 2D) = "grey" {}
-		_FlowMapSpeed("SMap Speed", Range(-1, 1)) = 0.2
-		_FlowDirection("Flow direction", vector) = (1,0,0,0)
+		//_FlowMap("Flow Map", 2D) = "grey" {}
+		//_FlowMapSpeed("SMap Speed", Range(-1, 1)) = 0.2
+		//_FlowDirection("Flow direction", vector) = (1,0,0,0)
     }
     SubShader
     {
