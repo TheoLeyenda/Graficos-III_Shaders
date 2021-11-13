@@ -16,11 +16,14 @@ public class MeshGenerator : MonoBehaviour
     public float substractDistanceVertices;
 
     Vector3[] vertices;
+    Vector2[] uvs;
     int[] triangles;
 
     public GameObject sphereDebug;
 
     private List<GameObject> instanciateObjects;
+
+    public bool useDebugVertices = false;
 
     void Start()
     {
@@ -28,17 +31,17 @@ public class MeshGenerator : MonoBehaviour
         GetComponent<MeshFilter>().mesh = mesh;
         CreateShape();
         instanciateObjects = new List<GameObject>();
-        InstanciateDebugShere();
+        if (useDebugVertices)
+        {
+            InstanciateDebugShere();
+        }
+
+        
     }
 
     private void Update()
     {
         UpdateMesh();
-
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            InstanciateDebugShere();
-        }
     }
     public void CreateShape()
     {
@@ -49,7 +52,7 @@ public class MeshGenerator : MonoBehaviour
         for (int z = 0; z <= zSize; z++)
         {
             for (int x = 0; x <= xSize; x++)
-            {
+            { 
                 vertices[i] = new Vector3(transform.position.x + x + distanceX, transform.position.y, transform.position.z + z + distanceZ);
                 i++;
                 distanceX = distanceX - substractDistanceVertices;
@@ -78,6 +81,16 @@ public class MeshGenerator : MonoBehaviour
             }
             vert++;
         }
+
+        uvs = new Vector2[vertices.Length];
+
+        int j = 0;
+        while (j < uvs.Length)
+        {
+            uvs[j] = new Vector2(vertices[j].x, vertices[j].z);
+            j++;
+        }
+        
     }
 
     void UpdateMesh()
@@ -86,8 +99,10 @@ public class MeshGenerator : MonoBehaviour
 
         mesh.vertices = vertices;
         mesh.triangles = triangles;
+        mesh.uv = uvs;
 
         mesh.RecalculateNormals();
+        
     }
 
     public void InstanciateDebugShere()

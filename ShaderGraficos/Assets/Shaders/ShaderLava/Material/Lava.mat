@@ -24,8 +24,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 0d55553696cb5884d9cb1b72be774524, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: ee6dc1be456732d48b3c7bfa74fa6eb0, type: 3}
+        m_Scale: {x: 0.01, y: 0.01}
         m_Offset: {x: 0, y: 0}
     - _RampTex:
         m_Texture: {fileID: 2800000, guid: e5982c51de94c0842bb37ec3d2d32141, type: 3}
@@ -36,6 +36,7 @@ Material:
     - _PowLevel: 0.41
     - _Threshold: 0
     - _UseBrightness: 0
-    - _YAmplitude: 0.008
+    - _YAmplitude: 0.05
     m_Colors:
     - _FlowDirection: {r: 0.05, g: -1, b: 0, a: 0}
+    - _OutColor: {r: 0, g: 0, b: 0, a: 0}

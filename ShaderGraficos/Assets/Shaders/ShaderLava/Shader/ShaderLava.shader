@@ -1,5 +1,9 @@
 ﻿Shader "TestShader/Lava"
 {
+	//Mas cantidad de vertices.
+	//Agarro un vertice aleatorio
+	//Realizo un calculo para tomar vertices en un rango especifico.
+
 	Properties{
 		_MainTex("Texture", 2D) = "black" {} //Textura que representa la forma de la lava.
 
@@ -11,6 +15,8 @@
 
 		_FlowMap("Flow Map", 2D) = "grey" {} //Textura que representara el movimiento de la lava dentro de la textura (Se usara para simular el movmiento de la lava por su temperatura).
 		_FlowMapSpeed("SMap Speed", Range(-1, 1)) = 0.2 // Velocidad a la que realizo el movimiento de de la lava dentro de la textura.
+		
+		_OutColor("Out Color", Color) = (0,0,0,0)
 	}
 	SubShader
 	{
@@ -36,6 +42,10 @@
 
 			sampler2D _FlowMap;
 			fixed _FlowMapSpeed;
+
+			float4 _OutColor;
+
+			float4 ramp;
 
 			struct appdata {
 				float4 vertex : POSITION;
@@ -83,8 +93,8 @@
 				//--------------------------------------------------------------------------//
 
 				//Genero y retorno el color del pixel actual de la lava con la textura _RampTex.
-				float4 ramp = tex2D(_RampTex, float2(col.r,0));
-
+				ramp = tex2D(_RampTex, float2(col.r,0));
+				_OutColor = ramp;
 				return ramp;
 				//-------------------------------------------------------------------------------//
 			}

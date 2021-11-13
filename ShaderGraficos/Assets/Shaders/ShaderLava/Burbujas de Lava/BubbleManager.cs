@@ -14,6 +14,10 @@ public class BubbleManager : MonoBehaviour
     public float maxDelaySpawnBubble;
     public float delaySpawnBubble;
 
+    public Color[] colors;
+
+    public float delayColor;
+
 
     private void OnEnable()
     {
@@ -53,7 +57,7 @@ public class BubbleManager : MonoBehaviour
         bubbleLava.transform.position = new Vector3(X, Y, Z);
 
         bubbleLava.gameObject.SetActive(true);
-
+        bubbleLava.materialLava.SetColor("_ColorTexture", colors[Random.Range(0, colors.Length)]);
         Bubbles.Remove(bubbleLava);
     }
 
