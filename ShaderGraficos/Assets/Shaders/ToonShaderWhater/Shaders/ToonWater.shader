@@ -47,11 +47,6 @@
 				float alpha = top.a + bottom.a * (1 - top.a);
 
 				return float4(color, alpha);
-			}			
-			
-			float random(float2 uv)
-			{
-				return frac(sin(dot(uv,float2(12.9898,78.233)))*43758.5453123);
 			}
 
             struct appdata
@@ -78,7 +73,6 @@
 			sampler2D _SurfaceNoise;
 			float4 _SurfaceNoise_ST;
 			float _SurfaceNoiseCutoff;
-			//float _FoamDistance; // REMPLAZADO POR LAS DOS LINEAS DE ABAJO
 			float _FoamMaxDistance;
 			float _FoamMinDistance;
 			float2 _SurfaceNoiseScroll;

@@ -82,7 +82,8 @@
 				col = lerp(col1, col2, lerpVal);
 				//--------------------------------------------------------------------------//
 
-				//Genero y retorno el color del pixel actual de la lava con la textura _RampTex.
+				//Genero y retorno el color del pixel actual de la lava con la textura _RampTex y utilizando la variable
+				//afectada por las texturas de movimiento col.
 				float4 ramp = tex2D(_RampTex, float2(col.r,0));
 
 				return ramp;
